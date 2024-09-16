@@ -5,6 +5,8 @@ import "objects"
 import "intersection"
 import "lights"
 
+module Layout = import "layout"
+
 let cast_view_rays (sizeX: i64) (sizeY: i64) (fov: i32) (eye_dir: position)
                  : [sizeY][sizeX]direction =
   let eye_vector = vec3.(normalise eye_dir)
@@ -148,3 +150,11 @@ entry render ({objects, lights}: world)
                  z=f32.sin eye_dir_A * f32.cos eye_dir_B}
   let eye_rays = cast_view_rays sizeX sizeY fov eye_dir
   in map (map (trace_ray limit objects lights ambient eye_pos)) eye_rays
+
+entry do_it (n: i64) : f32 =
+  let corpus = Layout.Corpus.make (tabulate_2d 256 256 (\i j -> f32.(i64 i + i64 j))) (tabulate_2d 256 256 (\_ _ -> 0f32))
+  let layout = Layout.Ansi31DAM.default
+  in loop acc = 0
+  for i < n do
+  let res = Layout.Stats.sfbs corpus.b0 layout |> reduce (+) 0
+  in acc + res

@@ -335,7 +335,7 @@ class FutballGUI:
 
         self.adjust_sounds(camera_pos)
 
-def main():
+def main_old():
     parser = argparse.ArgumentParser(description='FUTBALL')
     parser.add_argument('--fps', metavar='N', type=int,
                         help='cap FPS to this number', default=60)
@@ -351,6 +351,15 @@ def main():
     f = FutballGUI(args)
     f.run()
     return 0
+
+def main():
+    engine = futhark_object()
+    from datetime import datetime
+    start = datetime.now()
+    engine.do_it(200000000)
+    end = datetime.now()
+    interval = end - start
+    print(start, end, interval)
 
 if __name__ == '__main__':
     sys.exit(main())

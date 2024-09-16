@@ -326,7 +326,7 @@ module Ansi31DAM = {
         let same_finger_raw hand finger = filter (\(_,stroke) -> stroke.finger == finger && stroke.hand == hand) (zip (iota 31) all)
         let same_finger_indices hand finger = same_finger_raw hand finger |> map (.0)
         let same_finger_v1 hand finger = same_finger_raw hand finger |> map (.1)
-        let same_finger = same_finger_v2
+        let same_finger = same_finger_v1
 
         let same_hand_raw hand = filter (\(_,stroke) -> stroke.hand == hand) (zip (iota 31) all)
         let same_hand_indices hand = same_hand_raw hand |> map (.0)
@@ -354,14 +354,6 @@ module Stats = {
             in x
         ) Hf.all
 }
-
-let corpus = Corpus.make (tabulate_2d 256 256 (\i j -> f32.(i64 i + i64 j))) (tabulate_2d 256 256 (\_ _ -> 0f32))
-let layout = Ansi31DAM.default
-let do_it () : f32 =
-    loop acc = 0
-    for i < 1000 do
-    let res = Stats.sfbs corpus.b0 layout |> reduce (+) 0
-    in acc + res
 
 -- let sfbs [n] (layout: Layout.t [n]) : f32 =
 --     Stats.sfbs corpus.b0
