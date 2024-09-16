@@ -30,6 +30,7 @@ module Corpus : {
     val make [n]: *[n][n]f32 -> *[n][n]f32 -> *t[n]
     val b0 [n]: string[2] -> t[n] -> f32
     val b1 [n]: string[2] -> t[n] -> f32
+    val bogus: t [256]
 } = {
     module Item = {
         type t [n] = {
@@ -61,6 +62,8 @@ module Corpus : {
     let lookup [n] [m] (f : t[n] -> string[m] -> f32) (key: string[m]) (t : t[n]) = f t key
     let b0 [n] (key: string[2]) (t: t[n]) = lookup (\t key -> t.b0.norm[key[0]][key[1]]) key t
     let b1 [n] (key: string[2]) (t: t[n]) = lookup (\t key -> t.b1.norm[key[0]][key[1]]) key t
+
+    let bogus = make (tabulate_2d 256 256 (\i j -> f32.(i64 i + i64 j))) (tabulate_2d 256 256 (\_ _ -> 0f32))
 }
 
 module Hand = {

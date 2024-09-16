@@ -152,7 +152,7 @@ entry render ({objects, lights}: world)
   in map (map (trace_ray limit objects lights ambient eye_pos)) eye_rays
 
 entry do_it (n: i64) : f32 =
-  let corpus = Layout.Corpus.make (tabulate_2d 256 256 (\i j -> f32.(i64 i + i64 j))) (tabulate_2d 256 256 (\_ _ -> 0f32))
+  let corpus = Layout.Corpus.bogus
   let layout = Layout.Ansi31DAM.default
   in loop acc = 0
   for i < n do

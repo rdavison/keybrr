@@ -356,10 +356,14 @@ def main():
     engine = futhark_object()
     from datetime import datetime
     start = datetime.now()
-    engine.do_it(200000000)
+    layouts = 200000000
+    engine.do_it(layouts)
     end = datetime.now()
     interval = end - start
-    print(start, end, interval)
+    print("start", start)
+    print("end", end)
+    print("interval", interval)
+    print("layouts", layouts)
 
 if __name__ == '__main__':
     sys.exit(main())
